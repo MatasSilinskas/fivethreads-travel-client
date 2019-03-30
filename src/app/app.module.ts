@@ -1,8 +1,17 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CoreModule } from './@core/core.module';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { ThemeModule } from './@theme/theme.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthGuard } from './@core/routeGuards/auth.guard.service';
+import { NbAuthJWTInterceptor } from '@nebular/auth';
+import { ApiInterceptor } from './@core/utils/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -10,9 +19,19 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+
+    NgbModule.forRoot(),
+    ThemeModule.forRoot(),
+    CoreModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
