@@ -12,4 +12,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-person',
     link: '/pages/users',
   },
+  {
+    title: 'Apartaments',
+    icon: 'nb-person',
+    link: '/pages/apartaments',
+  },
 ];
