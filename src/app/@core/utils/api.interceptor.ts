@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 export class ApiInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
-        const accessToken = JSON.parse(localStorage.getItem('auth_app_token')).value;
+        const authObj = localStorage.getItem('auth_app_token');
+        const accessToken = (authObj) ? JSON.parse(authObj).value : undefined;
         if (accessToken) {
             request = request.clone({
                 setHeaders: {
