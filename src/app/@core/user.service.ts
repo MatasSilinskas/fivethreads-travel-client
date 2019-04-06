@@ -20,22 +20,22 @@ export class UserService extends ApiService {
     }
 
     public create(user: User, password: string): Observable<string> {
-        return this.httpClient.post<any>(this.getUrl('admin/user/create'), {
+        return this.httpClient.post(this.getUrl('admin/user/create'), {
             password,
             email: user.email,
             phone: user.phone,
-            name: user.firstname,
-            surname: user.lastname,
+            firstname: user.firstname,
+            lastname: user.lastname,
             role: user.role
-        });
+        }, { responseType: 'text' });
     }
 
     public update(user: User): Observable<string> {
-        return this.httpClient.put<any>(this.getUrl('admin/user'), user);
+        return this.httpClient.put(this.getUrl('admin/user'), user, { responseType: 'text' });
     }
 
     public delete(userId: string): Observable<string> {
-        return this.httpClient.delete<any>(this.getUrl(`admin/user/${userId}`));
+        return this.httpClient.delete(this.getUrl(`admin/user/${userId}`), { responseType: 'text' });
     }
 }
 

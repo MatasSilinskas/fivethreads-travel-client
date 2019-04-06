@@ -10,12 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from './@core/routeGuards/auth.guard.service';
-import { NbAuthJWTInterceptor } from '@nebular/auth';
 import { ApiInterceptor } from './@core/utils/api.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
