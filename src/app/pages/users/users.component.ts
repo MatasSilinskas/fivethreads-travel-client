@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { UserService } from 'src/app/@core/user.service';
 import { User } from 'src/app/@core/abstractions/user';
+import { MultiselectComponent } from 'src/app/@theme/components/multiselect/multiselect.component';
+import { RoleCellComponent } from './role-cell/role-cell.component';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-users',
@@ -31,10 +34,6 @@ export class UsersComponent implements OnInit {
       confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
       firstname: {
         title: 'First Name',
         type: 'string',
@@ -53,14 +52,32 @@ export class UsersComponent implements OnInit {
       },
       role: {
         title: 'Roles',
-        type: 'array',
+        type: 'custom',
+        renderComponent: RoleCellComponent,
+        editor: {
+          type: 'custom',
+          config: {
+            list: [
+              {
+                value: 'ROLE_USER', title: 'User'
+              },
+              {
+                value: 'ROLE_ADMIN', title: 'Admin'
+              },
+              {
+                value: 'ROLE_ORGANIZER', title: 'Organizer'
+              }],
+          },
+          // valuePrepareFunction: (cell, row) => cell,
+          component: MultiselectComponent,
+        },
       }
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private toaster: NbToastrService) {
   }
 
   ngOnInit() {
@@ -73,9 +90,16 @@ export class UsersComponent implements OnInit {
         userToCreate.lastname = row.lastname;
         userToCreate.phone = row.phone;
         userToCreate.email = row.email;
-        userToCreate.role = [row.role];
+        userToCreate.role = row.role;
         // todo: add password field
-        this.userService.create(userToCreate, 'test123').subscribe();
+        this.userService.create(userToCreate, 'test123').subscribe(
+          (res) => {
+            this.toaster.success(res, 'Success');
+          },
+          (err) => {
+            this.source.remove(row);
+            this.toaster.danger('An error occured', 'Error');
+        });
       });
 
       this.source.onUpdated().subscribe((row) => {
@@ -87,8 +111,13 @@ export class UsersComponent implements OnInit {
         userToUpdate.role = row.role;
         userToUpdate.id = row.id;
 
-        // todo: add password field
-        this.userService.update(userToUpdate).subscribe();
+        this.userService.update(userToUpdate).subscribe(
+          (res) => {
+            this.toaster.success(res, 'Success');
+          },
+          (err) => {
+            this.toaster.danger('An error occured', 'Error');
+          });
       });
 
       this.source.onRemoved().subscribe((row) => {

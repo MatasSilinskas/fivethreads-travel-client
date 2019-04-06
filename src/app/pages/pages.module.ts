@@ -8,11 +8,17 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { UsersComponent } from './users/users.component';
 import { ApartamentsComponent } from './apartaments/apartaments.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { RoleCellComponent } from './users/role-cell/role-cell.component';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
   UsersComponent,
   ApartamentsComponent,
+  RoleCellComponent,
+];
+
+const ENTRY_COMPONENT = [
+  RoleCellComponent,
 ];
 
 @NgModule({
@@ -26,6 +32,9 @@ const PAGES_COMPONENTS = [
   declarations: [
     ...PAGES_COMPONENTS,
   ],
+  entryComponents: [
+    ...ENTRY_COMPONENT,
+  ]
 })
 export class PagesModule {
 }

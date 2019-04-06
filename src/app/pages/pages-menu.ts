@@ -1,12 +1,12 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-  {
-    title: 'Dashboard',
-    icon: 'nb-home',
-    link: '/pages/dashboard',
-    home: true,
-  },
+  // {
+  //   title: 'Dashboard',
+  //   icon: 'nb-home',
+  //   link: '/pages/dashboard',
+  //   home: true,
+  // },
   {
     title: 'Users',
     icon: 'nb-person',
@@ -14,7 +14,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Apartaments',
-    icon: 'nb-person',
-    link: '/pages/apartaments',
+    icon: 'nb-home',
+    link: '/pages/apartments',
   },
 ];

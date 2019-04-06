@@ -19,12 +19,12 @@ const routes: Routes = [{
       component: UsersComponent,
     },
     {
-      path: 'apatraments',
+      path: 'apartments',
       component: ApartamentsComponent,
     },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'users',
       pathMatch: 'full',
     },
   ],
