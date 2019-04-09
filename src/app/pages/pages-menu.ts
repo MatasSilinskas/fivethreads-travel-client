@@ -17,4 +17,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-home',
     link: '/pages/apartments',
   },
+  {
+    title: 'Trips',
+    icon: 'nb-paper-plane',
+    link: '/pages/trips',
+  },
 ];
