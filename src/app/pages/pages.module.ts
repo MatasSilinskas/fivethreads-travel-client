@@ -10,6 +10,7 @@ import { ApartamentsComponent } from './apartaments/apartaments.component';
 import { TripsComponent } from './trips/trips.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { RoleCellComponent } from './users/role-cell/role-cell.component';
+import { StatusCellComponent } from './trips/status-cell/status-cell.component';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -21,6 +22,7 @@ const PAGES_COMPONENTS = [
 
 const ENTRY_COMPONENT = [
   RoleCellComponent,
+  StatusCellComponent,
 ];
 
 @NgModule({

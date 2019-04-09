@@ -3,9 +3,13 @@
 </nb-card-header>
 
 <nb-card-body>
+  
+  <button (click)="openWindowForm()" nbButton>Add Trip</button>
+
   <ng2-smart-table
     [settings]="settings"
     [source]="source"
     (deleteConfirm)="onDeleteConfirm($event)">
   </ng2-smart-table>
+
 </nb-card-body>

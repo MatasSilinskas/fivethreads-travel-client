@@ -4,6 +4,8 @@ import { TripService } from 'src/app/@core/trip.service';
 import { Trip } from 'src/app/@core/abstractions/trip';
 import { MultiselectComponent } from 'src/app/@theme/components/multiselect/multiselect.component';
 import { StatusCellComponent } from './status-cell/status-cell.component';
+import { TripCreationFormComponent } from './tripCreationForm/tripCreationForm.component';
+import { NbWindowService } from '@nebular/theme';
 
 
 @Component({
@@ -84,7 +86,7 @@ export class TripsComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private tripService: TripService) {
+  constructor(private tripService: TripService, private windowService: NbWindowService) {
   }
 
   ngOnInit() {
@@ -155,5 +157,10 @@ export class TripsComponent implements OnInit {
       event.confirm.reject();
     }
   }
+
+  openWindowForm() {
+    this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
+  }
+
 }
 

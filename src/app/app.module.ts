@@ -5,12 +5,14 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from './@core/routeGuards/auth.guard.service';
 import { ApiInterceptor } from './@core/utils/api.interceptor';
+import { NbWindowModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ApiInterceptor } from './@core/utils/api.interceptor';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    NbWindowModule.forRoot(),
+
   ],
   providers: [
     AuthGuard,
