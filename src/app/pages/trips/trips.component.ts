@@ -86,7 +86,7 @@ export class TripsComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private tripService: TripService, private windowService: NbWindowService) {
+  constructor(private tripService: TripService) {//private windowService: NbWindowService)
   }
 
   ngOnInit() {
@@ -159,7 +159,7 @@ export class TripsComponent implements OnInit {
   }
 
   openWindowForm() {
-    this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
+    //this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
   }
 
 }
