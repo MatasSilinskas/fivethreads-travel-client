@@ -18,6 +18,7 @@ const PAGES_COMPONENTS = [
   ApartamentsComponent,
   TripsComponent,
   RoleCellComponent,
+  StatusCellComponent,
 ];
 
 const ENTRY_COMPONENT = [
