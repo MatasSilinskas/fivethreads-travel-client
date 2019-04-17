@@ -16,11 +16,11 @@ export class ApartamentService extends ApiService {
     }
 
     public getAll(): Observable<Apartament[]> {
-      return this.httpClient.get<Apartament[]>(this.getUrl('admin/apartament'));
+      return this.httpClient.get<Apartament[]>(this.getUrl('apartments'));
     }
 
     public create(apartament: Apartament, password: string): Observable<string> {
-        return this.httpClient.post<any>(this.getUrl('admin/apartament/create'), {
+        return this.httpClient.post<any>(this.getUrl('admin/apartments/create'), {
             password,
             name: apartament.name,
             office: apartament.office,
@@ -30,11 +30,11 @@ export class ApartamentService extends ApiService {
     }
 
     public update(apartament: Apartament): Observable<string> {
-        return this.httpClient.put<any>(this.getUrl('admin/apartament'), apartament);
+        return this.httpClient.put<any>(this.getUrl('apartments/apartment'), apartament);
     }
 
     public delete(apartamentId: string): Observable<string> {
-        return this.httpClient.delete<any>(this.getUrl(`admin/apartament/${apartamentId}`));
+        return this.httpClient.delete<any>(this.getUrl(`admin/apartments/${apartamentId}`));
     }
 }
 

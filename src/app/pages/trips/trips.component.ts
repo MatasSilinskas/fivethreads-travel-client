@@ -6,6 +6,7 @@ import { MultiselectComponent } from 'src/app/@theme/components/multiselect/mult
 import { StatusCellComponent } from './status-cell/status-cell.component';
 import { TripCreationFormComponent } from './tripCreationForm/tripCreationForm.component';
 import { NbWindowService } from '@nebular/theme';
+import { UserService } from 'src/app/@core/user.service';
 
 
 @Component({
@@ -86,11 +87,11 @@ export class TripsComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private tripService: TripService) {//private windowService: NbWindowService)
+  constructor(private tripService: TripService, private userService: UserService,  private windowService: NbWindowService) {
   }
 
   ngOnInit() {
-    this.tripService.getAll().subscribe((data: Trip[]) => {
+      this.tripService.getAll().subscribe((data: Trip[]) => {
       this.source.load(data);
 
       this.source.onAdded().subscribe((row) => {
@@ -119,14 +120,14 @@ export class TripsComponent implements OnInit {
         tripToUpdate.status = row.status;
 
         // todo: add password field
-        this.tripService.update(tripToUpdate).subscribe();
+      //  this.tripService.update(tripToUpdate).subscribe();
       });
 
       this.source.onRemoved().subscribe((row) => {
         const id = row.id;
 
         // todo: add password field
-        this.tripService.delete(id).subscribe();
+       // this.tripService.delete(id).subscribe();
       });
     });
   }
@@ -159,8 +160,7 @@ export class TripsComponent implements OnInit {
   }
 
   openWindowForm() {
-    //this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
-  }
-
-}
+    this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
+  }  
+ }
 

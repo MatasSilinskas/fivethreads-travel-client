@@ -9,7 +9,7 @@ import { NbWindowRef } from '@nebular/theme';
       <label class="text-label" for="text">Text:</label>
       <textarea nbInput id="text"></textarea>
     </form>
-  `
+    `
 })
 export class TripCreationFormComponent {
   constructor(public windowRef: NbWindowRef) {}
