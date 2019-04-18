@@ -1,0 +1,164 @@
+<nb-card-header>
+    Trip creation
+</nb-card-header>
+
+<nb-card-body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3" *ngIf="allUsers">
+                <div class="mt-3">
+                    <div class="form-group row">
+                        <div class="col-sm-12"><label for="user">Employees:</label></div>
+                        <div class="col-sm-10">
+                            <select class="form-control form-control-sm" name="user" [(ngModel)]="selectedUser">
+                                <option *ngFor="let user of usersToSelectFrom" [ngValue]="user">{{user.firstname}}
+                                    {{user.lastname}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-primary" (click)="add()" [disabled]="!selectedUser">Add</button>
+                        </div>
+                    </div>
+                    <label *ngIf="selection.selected.length !== 0">Employees in trip:</label>
+
+                    <div class="row mb-2" *ngFor="let user of selection.selected">
+                        <div class="col-sm-8 mr-1">{{user.firstname}} {{user.lastname}}</div>
+                        <div class="col-sm-1 mr-1" class="color-box" [style.backgroundColor]="user.color"></div>
+                        <div class="col-sm-1">
+                            <div class="icon" (click)="remove(user)">
+                                <i class="nb-close"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 offset-md-1">
+                <div class="mt-4">
+                    <div>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br>
+                                    <div class="btn-group">
+                                        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view"
+                                            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                            Previous
+                                        </div>
+                                        <div class="btn btn-primary" mwlCalendarToday [(viewDate)]="viewDate">
+                                            {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+                                        </div>
+                                        <div class="btn btn-primary" mwlCalendarNextView [view]="view"
+                                            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                            Next
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div [ngSwitch]="view" class="row">
+                                <div class="col-md-12">
+                                    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate"
+                                        [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+                                        (dayClicked)="dayClicked($event.day)"
+                                        (eventTimesChanged)="eventTimesChanged($event)">
+                                    </mwl-calendar-month-view>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input class="mb-2" nbInput class="form-control" [(ngModel)]="departureDate"
+                        placeholder="Departure date" [nbDatepicker]="picker1" (ngModelChange)="onChangeDate($event)">
+                    <nb-datepicker #picker1 [min]="min"></nb-datepicker>
+                </div>
+                <div class="form-group">
+                    <input class="mt-2" placeholder="Departure location" autocorrect="off" autocapitalize="off"
+                        spellcheck="off" type="text" class="form-control" #searchDeparture
+                        [formControl]="searchControlDeparture">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input class="mb-2" nbInput class="form-control" [(ngModel)]="arrivalDate"
+                        placeholder="Arrival date" [nbDatepicker]="picker2" (ngModelChange)="onChangeDate($event)">
+                    <nb-datepicker #picker2 [min]="departureDate ? departureDate : min"></nb-datepicker>
+                </div>
+                <div class="form-group">
+                    <input class="mt-2" placeholder="Arrival location" autocorrect="off" autocapitalize="off"
+                        spellcheck="off" type="text" class="form-control" #searchArrival
+                        [formControl]="searchControlArrival">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <agm-map [latitude]="latitudeDeparture" [longitude]="longitudeDeparture" [scrollwheel]="false"
+                    [zoom]="zoom">
+                    <agm-marker [latitude]="latitudeDeparture" [longitude]="longitudeDeparture" [agmFitBounds]="true">
+                    </agm-marker>
+                    <agm-marker [latitude]="latitudeArrival" [longitude]="longitudeArrival" [agmFitBounds]="true">
+                    </agm-marker>
+                </agm-map>
+            </div>
+        </div>
+        <!--  -->
+        <div class="row mt-4" *ngIf="selection.selected.length !== 0">
+            <div class="col-12">
+                <h5>Provided for travellers:</h5>
+            </div>
+            <div class="col-md-4" *ngFor="let user of selection.selected">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6>{{user.firstname}} {{user.lastname}}:</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <nb-checkbox [(ngModel)]="user.isFlightTickedNeeded">Flight tickets</nb-checkbox>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <nb-checkbox [(ngModel)]="user.isCarNeeded">Car rental</nb-checkbox>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="mb-2" nbInput class="form-control" [(ngModel)]="user.carTicketDTO.carRentStart"
+                            placeholder="Start" [nbDatepicker]="picker">
+                        <nb-datepicker #picker [min]="min"></nb-datepicker>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="mb-2" nbInput class="form-control" [(ngModel)]="user.carTicketDTO.carRentFinish"
+                            placeholder="End" [nbDatepicker]="picker2">
+                        <nb-datepicker #picker2 [min]="min"></nb-datepicker>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <nb-checkbox [(ngModel)]="user.isAccommodationNeeded">Accomodation</nb-checkbox>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="mb-2" nbInput class="form-control"
+                            [(ngModel)]="user.accommodationDTO.accommodationStart" placeholder="Start"
+                            [nbDatepicker]="picker3">
+                        <nb-datepicker #picker3 [min]="min"></nb-datepicker>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="mb-2" nbInput class="form-control"
+                            [(ngModel)]="user.accommodationDTO.accommodationFinish" placeholder="End"
+                            [nbDatepicker]="picker4">
+                        <nb-datepicker #picker4 [min]="min"></nb-datepicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-3 offset-md-9">
+                <button class="btn btn-primary w-100" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</nb-card-body>

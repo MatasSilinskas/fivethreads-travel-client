@@ -12,7 +12,10 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from './@core/routeGuards/auth.guard.service';
 import { ApiInterceptor } from './@core/utils/api.interceptor';
-import { NbWindowModule } from '@nebular/theme';
+import { NbWindowModule, NbDatepickerModule, NbCalendarRangeModule } from '@nebular/theme';
+import { LoginAuthGuard } from './@core/routeGuards/login.guard.service';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -28,10 +31,16 @@ import { NbWindowModule } from '@nebular/theme';
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     NbWindowModule.forRoot(),
+    NbDatepickerModule.forRoot(),
 
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleAPIKey,
+      libraries: ['places']
+    }),
   ],
   providers: [
     AuthGuard,
+    LoginAuthGuard,
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
   ],

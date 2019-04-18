@@ -22,4 +22,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-paper-plane',
     link: '/pages/trips',
   },
+  {
+    title: 'Trips creation',
+    icon: 'nb-paper-plane',
+    link: '/pages/tripsCreation',
+  },
 ];

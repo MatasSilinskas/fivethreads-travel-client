@@ -86,7 +86,7 @@ export class TripsComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private tripService: TripService) {//private windowService: NbWindowService)
+  constructor(private tripService: TripService) { // private windowService: NbWindowService)
   }
 
   ngOnInit() {
@@ -95,28 +95,28 @@ export class TripsComponent implements OnInit {
 
       this.source.onAdded().subscribe((row) => {
         const tripToCreate = new Trip();
-        tripToCreate.id = row.id;
-        tripToCreate.from = row.from;
-        tripToCreate.to = row.to;
-        tripToCreate.accommodation = row.accommodation;
-        tripToCreate.persons = row.persons;
-        tripToCreate.organizer = row.organizer;
-        tripToCreate.status = row.status;
-   
+        // tripToCreate.id = row.id;
+        // tripToCreate.from = row.from;
+        // tripToCreate.to = row.to;
+        // tripToCreate.accommodation = row.accommodation;
+        // tripToCreate.persons = row.persons;
+        // tripToCreate.organizer = row.organizer;
+        // tripToCreate.status = row.status;
+
         // todo: add password field
-        this.tripService.create(tripToCreate, 'test123').subscribe();
+        this.tripService.create(tripToCreate).subscribe();
       });
 
       this.source.onUpdated().subscribe((row) => {
         const tripToUpdate = new Trip();
-       
-        tripToUpdate.id = row.id;
-        tripToUpdate.from = row.from;
-        tripToUpdate.to = row.to;
-        tripToUpdate.accommodation = row.accommodation;
-        tripToUpdate.persons = row.persons;
-        tripToUpdate.organizer = row.organizer;
-        tripToUpdate.status = row.status;
+
+        // tripToUpdate.id = row.id;
+        // tripToUpdate.from = row.from;
+        // tripToUpdate.to = row.to;
+        // tripToUpdate.accommodation = row.accommodation;
+        // tripToUpdate.persons = row.persons;
+        // tripToUpdate.organizer = row.organizer;
+        // tripToUpdate.status = row.status;
 
         // todo: add password field
         this.tripService.update(tripToUpdate).subscribe();
@@ -159,7 +159,7 @@ export class TripsComponent implements OnInit {
   }
 
   openWindowForm() {
-    //this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
+    // this.windowService.open(TripCreationFormComponent, { title: `Create Trip` });
   }
 
 }

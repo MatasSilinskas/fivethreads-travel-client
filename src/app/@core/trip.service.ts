@@ -19,16 +19,8 @@ export class TripService extends ApiService {
       return this.httpClient.get<Trip[]>(this.getUrl('admin/trip'));
     }
 
-    public create(trip: Trip, password: string): Observable<string> {
-        return this.httpClient.post<any>(this.getUrl('admin/trip/create'), {
-            password,
-            from : trip.from,
-            to : trip.to,
-            accommodation : trip.accommodation,
-            persons : trip.persons,
-            organizer : trip.organizer,
-            status : trip.status,
-        });
+    public create(trip: Trip): Observable<string> {
+        return this.httpClient.post<any>(this.getUrl('trip/create'), trip);
     }
 
     public update(trip: Trip): Observable<string> {

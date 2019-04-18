@@ -11,6 +11,13 @@ import { TripsComponent } from './trips/trips.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { RoleCellComponent } from './users/role-cell/role-cell.component';
 import { StatusCellComponent } from './trips/status-cell/status-cell.component';
+import { TripCreationFormComponent } from './trips/tripCreationForm/tripCreationForm.component';
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NbDatepickerModule } from '@nebular/theme';
+import { AgmCoreModule } from '@agm/core';
+
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -19,6 +26,7 @@ const PAGES_COMPONENTS = [
   TripsComponent,
   RoleCellComponent,
   StatusCellComponent,
+  TripCreationFormComponent,
 ];
 
 const ENTRY_COMPONENT = [
@@ -33,6 +41,12 @@ const ENTRY_COMPONENT = [
     DashboardModule,
     MiscellaneousModule,
     Ng2SmartTableModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    NbDatepickerModule,
+    AgmCoreModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,

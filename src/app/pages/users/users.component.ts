@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit {
         userToCreate.email = row.email;
         userToCreate.role = row.role;
         // todo: add password field
-        this.userService.create(userToCreate, 'test123').subscribe(
+        this.userService.create(userToCreate, 'Test123').subscribe(
           (res) => {
             this.toaster.success(res, 'Success');
           },

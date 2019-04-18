@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { ApartamentsComponent } from './apartaments/apartaments.component';
 import { TripsComponent } from './trips/trips.component';
+import { TripCreationFormComponent } from './trips/tripCreationForm/tripCreationForm.component';
 
 
 const routes: Routes = [{
@@ -27,6 +28,10 @@ const routes: Routes = [{
     {
       path: 'trips',
       component: TripsComponent,
+    },
+    {
+      path: 'tripsCreation',
+      component: TripCreationFormComponent,
     },
     {
       path: '',
