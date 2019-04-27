@@ -120,7 +120,7 @@ const COMPONENTS = [
 const ENTRY_COMPONENTS = [
   ThemeSwitcherListComponent,
   MultiselectComponent,
-  
+
 ];
 
 const PIPES = [

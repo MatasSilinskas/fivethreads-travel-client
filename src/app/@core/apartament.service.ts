@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { ApiService } from './api-service';
-import { ApiResponse } from './abstractions/api-response';
 
 @Injectable({
     providedIn: 'root',
@@ -16,31 +15,18 @@ export class ApartamentService extends ApiService {
     }
 
     public getAll(): Observable<Apartament[]> {
-      return this.httpClient.get<Apartament[]>(this.getUrl('admin/apartament'));
+      return this.httpClient.get<Apartament[]>(this.getUrl('apartments'));
     }
 
-    public create(apartament: Apartament, password: string): Observable<string> {
-        return this.httpClient.post<any>(this.getUrl('admin/apartament/create'), {
-            password,
-            name: apartament.name,
-            office: apartament.office,
-            adress: apartament.adress,
-            places: apartament.places,
-        });
+    public create(apartament: Apartament): Observable<string> {
+        return this.httpClient.post<any>(this.getUrl('admin/apartments/create'), apartament);
     }
 
     public update(apartament: Apartament): Observable<string> {
-        return this.httpClient.put<any>(this.getUrl('admin/apartament'), apartament);
+        return this.httpClient.put<any>(this.getUrl('apartments/apartment'), apartament);
     }
 
     public delete(apartamentId: string): Observable<string> {
-        return this.httpClient.delete<any>(this.getUrl(`admin/apartament/${apartamentId}`));
+        return this.httpClient.delete<any>(this.getUrl(`admin/apartments/${apartamentId}`));
     }
-}
-
-export interface ApartamentResponse extends ApiResponse {
-    data: {
-        token?: string;
-        apartament: ApartamentResponse;
-    };
 }

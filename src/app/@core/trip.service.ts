@@ -16,20 +16,20 @@ export class TripService extends ApiService {
     }
 
     public getAll(): Observable<Trip[]> {
-      return this.httpClient.get<Trip[]>(this.getUrl('admin/trip'));
+      return this.httpClient.get<Trip[]>(this.getUrl('allTrips'));
     }
 
     public create(trip: Trip): Observable<string> {
         return this.httpClient.post<any>(this.getUrl('trip/create'), trip);
     }
 
-    public update(trip: Trip): Observable<string> {
-        return this.httpClient.put<any>(this.getUrl('admin/trip'), trip);
-    }
+//    public update(trip: Trip): Observable<string> {
+//        return this.httpClient.put<any>(this.getUrl('admin/trip'), trip);
+//    }
 
-    public delete(tripId: string): Observable<string> {
-        return this.httpClient.delete<any>(this.getUrl(`admin/trip/${tripId}`));
-    }
+  //  public delete(tripId: string): Observable<string> {
+    //    return this.httpClient.delete<any>(this.getUrl(`tripMember/flight/${tripId}`));
+  //  }
 }
 
 export interface TripResponse extends ApiResponse {
