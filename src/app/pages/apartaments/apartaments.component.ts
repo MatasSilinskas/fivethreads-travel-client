@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ApartamentService } from 'src/app/@core/apartament.service';
 import { Apartament } from 'src/app/@core/abstractions/apartament';
+import { OfficeService } from 'src/app/@core/office.service';
+import { Office } from 'src/app/@core/abstractions/office';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-apartaments',
@@ -14,6 +17,7 @@ import { Apartament } from 'src/app/@core/abstractions/apartament';
   `],
 })
 export class ApartamentsComponent implements OnInit {
+  officeLoaded = false;
 
   settings = {
     add: {
@@ -31,59 +35,75 @@ export class ApartamentsComponent implements OnInit {
       confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      name: {
-        title: 'Name',
+      address: {
+        title: 'Address',
         type: 'string',
       },
-      office: {
+      officeId: {
         title: 'Office',
-        type: 'string',
-      },
-      adress: {
-        title: 'Adress',
-        type: 'string',
-      },
-      places: {
-        title: 'Number of places',
-        type: 'number',
+        type: 'html',
+        editor: {
+          type: 'list',
+          config: {
+            list: [],
+          },
+        },
       },
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private apartamentService: ApartamentService) {
+  constructor(private apartamentService: ApartamentService, private officeService: OfficeService, private toaster: NbToastrService) {
   }
 
   ngOnInit() {
+    this.officeService.getAll().subscribe((data) => {
+      this.settings.columns.officeId.editor.config.list = data.map(item => {
+        return {
+          title: item.name,
+          value: item.id
+        };
+      });
+
+      this.officeLoaded = true;
+    });
+
     this.apartamentService.getAll().subscribe((data: Apartament[]) => {
       this.source.load(data);
 
       this.source.onAdded().subscribe((row) => {
         const apartamentToCreate = new Apartament();
-        apartamentToCreate.name = row.name;
-        apartamentToCreate.office = row.office;
-        apartamentToCreate.adress = row.adress;
-        apartamentToCreate.places = row.places;
-   
+        apartamentToCreate.officeId = row.officeId;
+        apartamentToCreate.address = row.address;
+
         // todo: add password field
-        this.apartamentService.create(apartamentToCreate, 'test123').subscribe();
+        this.apartamentService.create(apartamentToCreate).subscribe(
+          (res) => {
+            this.toaster.success('Apartments created', 'Success');
+          },
+          (err) => {
+            this.source.remove(row);
+            this.toaster.danger('An error occured', 'Error');
+          }
+        );
       });
 
       this.source.onUpdated().subscribe((row) => {
         const apartamentToUpdate = new Apartament();
-        apartamentToUpdate.name = row.name;
-        apartamentToUpdate.office = row.office;
-        apartamentToUpdate.adress = row.adress;
-        apartamentToUpdate.places = row.places;
+        apartamentToUpdate.officeId = row.officeId;
+        apartamentToUpdate.address = row.address;
         apartamentToUpdate.id = row.id;
 
         // todo: add password field
-        this.apartamentService.update(apartamentToUpdate).subscribe();
+        this.apartamentService.update(apartamentToUpdate).subscribe(
+          (res) => {
+            this.toaster.success('Apartments updated', 'Success');
+          },
+          (err) => {
+            this.toaster.danger('An error occured', 'Error');
+          }
+        );
       });
 
       this.source.onRemoved().subscribe((row) => {

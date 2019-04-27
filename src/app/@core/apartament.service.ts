@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { ApiService } from './api-service';
-import { ApiResponse } from './abstractions/api-response';
 
 @Injectable({
     providedIn: 'root',
@@ -19,14 +18,8 @@ export class ApartamentService extends ApiService {
       return this.httpClient.get<Apartament[]>(this.getUrl('apartments'));
     }
 
-    public create(apartament: Apartament, password: string): Observable<string> {
-        return this.httpClient.post<any>(this.getUrl('admin/apartments/create'), {
-            password,
-            name: apartament.name,
-            office: apartament.office,
-            adress: apartament.adress,
-            places: apartament.places,
-        });
+    public create(apartament: Apartament): Observable<string> {
+        return this.httpClient.post<any>(this.getUrl('admin/apartments/create'), apartament);
     }
 
     public update(apartament: Apartament): Observable<string> {
@@ -36,11 +29,4 @@ export class ApartamentService extends ApiService {
     public delete(apartamentId: string): Observable<string> {
         return this.httpClient.delete<any>(this.getUrl(`admin/apartments/${apartamentId}`));
     }
-}
-
-export interface ApartamentResponse extends ApiResponse {
-    data: {
-        token?: string;
-        apartament: ApartamentResponse;
-    };
 }
