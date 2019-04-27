@@ -83,6 +83,9 @@ export class TripCreationFormComponent implements OnInit {
           tripUser.email = user.email;
           tripUser.firstname = user.firstname;
           tripUser.lastname = user.lastname;
+          tripUser.isAccommodationNeeded = false;
+          tripUser.isCarNeeded = false;
+          tripUser.isFlightTickedNeeded = false;
           tripUser.accommodationDTO = new Accommodation();
           tripUser.carTicketDTO = new CarTicket();
           tripUser.flightTicketDTO = new FlightTicket();
@@ -192,7 +195,6 @@ export class TripCreationFormComponent implements OnInit {
     this.tripEvent.end = this.arrivalDate;
 
     this.events = this.events.filter(event => event.id !== 0);
-    console.log(this.events.length);
     this.events.push(this.tripEvent);
   }
 
